@@ -1,0 +1,51 @@
+diff -urN a/include/net/netfilter/nf_conntrack.h b/include/net/netfilter/nf_conntrack.h
+--- a/include/net/netfilter/nf_conntrack.h	2021-10-11 15:44:26.429173737 +0800
++++ b/include/net/netfilter/nf_conntrack.h	2021-10-11 15:42:40.519058856 +0800
+@@ -54,6 +54,27 @@
+ 
+ #include <net/netfilter/ipv4/nf_conntrack_ipv4.h>
+ #include <net/netfilter/ipv6/nf_conntrack_ipv6.h>
++struct nf_stat{
++	u_int64_t up_bytes;
++	u_int64_t down_bytes;
++	u_int64_t up_pkts;
++	u_int64_t down_pkts;
++};
++
++struct nf_fros_data{
++	u_int32_t appid;
++	u_int32_t mark;
++	u_int32_t match_status;
++	u_int32_t action;
++	u_int8_t appname[32];
++	u_int8_t http;
++	u_int8_t host[16];
++	void *user;
++	struct nf_stat stat;
++	u_int8_t ext[64];// reserved
++	
++	
++};
+ 
+ struct nf_conn {
+ 	/* Usage count in here is 1 for hash table, 1 per skb,
+@@ -99,6 +120,8 @@
+ #ifdef CONFIG_NF_CONNTRACK_SECMARK
+ 	u_int32_t secmark;
+ #endif
++	struct nf_fros_data fros_data;
++
+ 
+ 	/* Extensions */
+ 	struct nf_ct_ext *ext;
+diff -urN a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+--- a/net/netfilter/nf_conntrack_core.c	2021-10-11 15:44:22.149241387 +0800
++++ b/net/netfilter/nf_conntrack_core.c	2021-10-11 15:42:29.327285770 +0800
+@@ -1367,6 +1367,7 @@
+ 	*(unsigned long *)(&ct->tuplehash[IP_CT_DIR_REPLY].hnnode.pprev) = hash;
+ 	ct->status = 0;
+ 	ct->timeout = 0;
++	memset(&ct->fros_data, 0x0, sizeof(struct nf_fros_data));
+ 	write_pnet(&ct->ct_net, net);
+ 	memset(&ct->__nfct_init_offset, 0,
+ 	       offsetof(struct nf_conn, proto) -
