@@ -1,4 +1,4 @@
-fork from https://github.com/coolsnowwolf/lede.git(感谢lean大)
+fork from https://github.com/coolsnowwolf/lede.git (感谢lean大)
 
 ## 说明
 固定内核版本号，不频繁切换内核，方便安装应用过滤等依赖于内核的插件
