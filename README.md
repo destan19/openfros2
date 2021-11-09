@@ -14,9 +14,10 @@ git clone https://github.com/destan19/openfros.git
 ```
 如果这一步报错，切换网络或者搭建梯子后编译  
 
-3. 选择产品并编译固件
+3. 选择产品并编译固件  
 可以通过make menuconfig选择，也可以用我提供的一键编译脚本进行编译  
-默认是都是编译x86固件  
+默认是都是编译x86固件   
+
 **方法1:**
 ```
 make V=s 
