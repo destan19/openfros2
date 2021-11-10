@@ -1,7 +1,7 @@
 
 CONFIG_PATH="configs"
 #芯片方案目录名称，在$CONFIG_PATH目录中，可以指定编译哪个方案
-#arch_list="x86 mt7621 rock bcmxxx ipq40xx mt7620"
+#arch_list="x86 mt7621 rock bcm53xx ipq40xx mt7620 mt7628"
 arch_list="x86"
 #指定编译的产品（不指定会编译$arch_list中的所有产品），不指定需要设置为""
 #产品名称加入config文件的名称即可，也可以添加部分字符串，支持模糊匹配
@@ -41,9 +41,7 @@ build_product()
     rm tmp/* -fr
     echo "clean tmp dir ....ok"
     cp ${CONFIG_PATH}/${arch}/${product} .config
-    make defconfig
     if [ $fros_ipk -eq 1 ];then
-		echo "CONFIG_PACKAGE_kmod-portal=y" >>.config
 		echo "CONFIG_PACKAGE_apid=y" >>.config
 		echo "CONFIG_PACKAGE_appfilter=y" >>.config
 		echo "CONFIG_PACKAGE_kmod-app_delay=y" >>.config
@@ -53,17 +51,20 @@ build_product()
 		echo "CONFIG_PACKAGE_libfros_util=y" >>.config
 		echo "CONFIG_PACKAGE_libuci_config=y" >>.config
 		echo "CONFIG_PACKAGE_license=y" >>.config
-		echo "CONFIG_PACKAGE_portald=y" >>.config
 		echo "CONFIG_PACKAGE_web_cgi=y" >>.config
 		echo "CONFIG_PACKAGE_luci-app-app_delay=y" >>.config
 		echo "CONFIG_PACKAGE_luci-app-fros=y" >>.config
 		echo "CONFIG_PACKAGE_luci-app-parent_manage=y" >>.config
-		echo "CONFIG_PACKAGE_luci-app-portal=y" >>.config
 		echo "CONFIG_PACKAGE_luci-app-stats=y" >>.config
 		echo "CONFIG_PACKAGE_luci-i18n-fros-zh-cn=y" >>.config
 		echo "CONFIG_PACKAGE_luci-i18n-parent_manage-zh-cn=y" >>.config
-		echo "CONFIG_PACKAGE_luci-i18n-portal-zh-cn=y" >>.config
+		if [ $arch != "mt7620" -a $arch != "mt7628" ];then
+		echo "CONFIG_PACKAGE_portald=y" >>.config
 		echo "CONFIG_PACKAGE_iperf3=y">>.config
+		echo "CONFIG_PACKAGE_luci-i18n-portal-zh-cn=y" >>.config
+		echo "CONFIG_PACKAGE_luci-app-portal=y" >>.config
+		echo "CONFIG_PACKAGE_kmod-portal=y" >>.config
+		fi
 	fi
     echo "clean  $product"
     make -j2 V=s
@@ -165,10 +166,9 @@ mkdir release >/dev/null 2>&1
 rm run.log >/dev/null 2>&1
 
 for arch in $arch_list; do
-    echo "arch_count=$arch_count"
     if [ $arch_count -gt 1 ];then
         echo "exec exec make clean, $arch"
-        make clean
+     #   make clean
     fi
     build_arch_products $arch
     if [ $fros_ipk -eq 1 ];then
