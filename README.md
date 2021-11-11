@@ -49,14 +49,16 @@ https://github.com/coolsnowwolf/lede.git
 
 ## 注册码获取
 > 注册机制采用本地注册，不会连接和上报设备信息到服务器，请放心使用  
-> 每个设备在fros设置中有个唯一id，请不要频繁刷机，id依赖于mac地址等硬件信息   
+> 每个设备在fros设置中有个唯一id，请不要频繁刷机，id依赖于mac地址等硬件信息    
+> 开发也不容易，为了保持长期更新高级版本源码不开放，当然你也可以选择使用开源版本  
 
 **方式一：**  
 分享微信公众号(OpenWrt)的任意一篇文章到朋友圈，获得3个以上赞截图。  
 
 **方式二：**  
 如果你想支持下作者，可以打赏任意金额，不要超过20，打赏后截图。  
-![](https://gitee.com/destan19/picture/raw/master/picgo/202111111359022.png)
+![](https://gitee.com/destan19/picture/raw/master/picgo/202111111359022.png)  
+
 通过以上两种方式后，加微信(linux4096)直接发截图（打赏或朋友圈）和设备id  
 
 **说明：**
