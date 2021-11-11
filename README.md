@@ -56,7 +56,7 @@ https://github.com/coolsnowwolf/lede.git
 
 **方式二：**  
 如果你想支持下作者，可以打赏任意金额，不要超过20，打赏后截图。  
-![](https://gitee.com/destan19/picture/raw/master/picgo/202111111356820.JPG)  
+![](https://gitee.com/destan19/picture/raw/master/picgo/202111111359022.png)
 通过以上两种方式后，加微信(linux4096)直接发截图（打赏或朋友圈）和设备id  
 
 **说明：**
